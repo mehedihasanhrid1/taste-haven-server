@@ -1,2 +1,30 @@
-# Taste Haven Server
+# Taste Haven Server: A Journey of Flavors
 
+## Website Link: [Click Here]()
+
+## Server Link: [Click Here]()
+
+This repository contains an Express.js server application with the following features:
+
+- **MongoDB**: A NoSQL database for storing and managing your application's data.
+
+- **CORS (Cross-Origin Resource Sharing)**: This middleware enables your server to handle requests from different origins, making it suitable for building APIs that can be accessed by clients from various domains.
+
+- **dotenv**: A library that loads environment variables from a `.env` file, ensuring a secure and customizable configuration for your application.
+
+- **Vercel Deployment**: The server is set up to be easily deployable on Vercel, a cloud platform that provides serverless functions and hosting.
+
+## Prerequisites
+
+Before getting started, make sure you have the following installed on your system:
+
+- Node.js: You can download it [here](https://nodejs.org/).
+
+- MongoDB: You need a MongoDB server or a cloud-hosted MongoDB service. Update the MongoDB connection string in the `.env` file.
+
+## Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/programming-hero-web-course-4/b8a10-brandshop-server-side-mehedihasanhrid1.git
