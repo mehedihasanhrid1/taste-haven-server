@@ -6,6 +6,8 @@
 
 This repository contains an Express.js server application with the following features:
 
+- **NPM**: A package manager for JavaScript, commonly used with Node.js. npm is the default package manager for Node.js, and it allows developers to install, manage, and distribute packages or libraries of code written in JavaScript.
+
 - **MongoDB**: A NoSQL database for storing and managing your application's data.
 
 - **CORS (Cross-Origin Resource Sharing)**: This middleware enables your server to handle requests from different origins, making it suitable for building APIs that can be accessed by clients from various domains.
@@ -13,6 +15,7 @@ This repository contains an Express.js server application with the following fea
 - **dotenv**: A library that loads environment variables from a `.env` file, ensuring a secure and customizable configuration for your application.
 
 - **Vercel Deployment**: The server is set up to be easily deployable on Vercel, a cloud platform that provides serverless functions and hosting.
+
 
 ## Prerequisites
 
