@@ -35,6 +35,19 @@ async function run() {
       }
     });
 
+    app.get('/products', async (req, res) => {
+      try {
+        const database = client.db("TasteHaven");
+        const collection = database.collection("products");
+        const productsData = await collection.find({}).toArray();
+
+        res.json(productsData);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+        res.status(500).send("Server error");
+      }
+    });
+
     app.post('/products/add', async (req, res) => {
       try {
         const database = client.db("TasteHaven");
@@ -62,7 +75,7 @@ async function run() {
 
         const result = await collection.insertOne(newProduct);
         res.send(result);
-        
+
       } catch (error) {
         console.error("Error adding a product:", error);
         res.status(500).send("Server error");
