@@ -48,6 +48,25 @@ async function run() {
       }
     });
 
+    app.get('/sliders/:brandName', async (req, res) => {
+      try {
+        const database = client.db('TasteHaven');
+        const collection = database.collection('sliders');
+        const brandName = req.params.brandName;
+        const sliderData = await collection.findOne({ name: brandName });
+
+        if (sliderData) {
+          const images = sliderData.images;
+          res.json(images);
+        } else {
+          res.status(404).send('Slider data not found for the specified brand.');
+        }
+      } catch (error) {
+        console.error('Error fetching slider data:', error);
+        res.status(500).send('Server error');
+      }
+    });
+
     app.post('/products/add', async (req, res) => {
       try {
         const database = client.db("TasteHaven");
