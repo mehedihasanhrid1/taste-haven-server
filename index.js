@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion , ObjectId } = require('mongodb');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -67,6 +67,41 @@ async function run() {
       }
     });
 
+    app.put('/products/update/:product_id', async (req, res) => {
+      try {
+        const database = client.db('TasteHaven');
+        const collection = database.collection('products');
+        
+        const product_id = req.params.product_id;
+    
+        const { product_name, image, brand_name, product_category, price, rating, description } = req.body;
+    
+        const updateFields = {
+          product_name,
+          image,
+          brand_name,
+          product_category,
+          price,
+          rating,
+          description
+        };
+    
+        const result = await collection.updateOne(
+          { _id: new ObjectId(product_id) },
+          { $set: updateFields }
+        );
+    
+        if (result.matchedCount === 0) {
+          res.status(404).send('Product not found');
+        } else {
+          res.status(200).send('Product updated successfully');
+        }
+      } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).send('Server error');
+      }
+    });
+    
     app.post('/products/add', async (req, res) => {
       try {
         const database = client.db("TasteHaven");
@@ -100,6 +135,71 @@ async function run() {
         res.status(500).send("Server error");
       }
     });
+
+    app.post('/cart/add', async (req, res) => {
+      try {
+        const database = client.db("TasteHaven");
+        const collection = database.collection("cart");
+    
+        const { userEmail, productData } = req.body;
+    
+        const cartItem = {
+          userEmail,
+          productData,
+        };
+    
+        const result = await collection.insertOne(cartItem);
+        res.status(200).send('Product added to cart successfully');
+
+      } catch (error) {
+        console.error('Error adding a product to the cart:', error);
+        res.status(500).send('Server error');
+      }
+    });
+
+
+    app.get('/cart/items/:userEmail', async (req, res) => {
+      try {
+        const userEmail = req.params.userEmail; 
+    
+        const database = client.db('TasteHaven');
+        const collection = database.collection('cart');
+    
+        const cartItems = await collection.find({ userEmail }).toArray();
+    
+        res.json(cartItems);
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+        res.status(500).send('Server error');
+      }
+    });
+    
+    app.delete('/cart/remove', async (req, res) => {
+      try {
+        const userEmail = req.query.userEmail;
+        const itemId = req.query.itemId;
+        
+        if (!userEmail || !itemId) {
+          return res.status(400).send('Missing required parameters (userEmail or itemId)');
+        }
+    
+        const database = client.db('TasteHaven');
+        const collection = database.collection('cart');
+        const itemObjectId = new ObjectId(itemId);
+        
+        const deleteResult = await collection.deleteOne({ userEmail, _id: itemObjectId });
+    
+        if (deleteResult.deletedCount === 1) {
+          res.status(204).send(); 
+        } else {
+          res.status(404).send('Item not found in the cart');
+        }
+      } catch (error) {
+        console.error('Error removing item from the cart:', error);
+        res.status(500).send('Server error');
+      }
+    });
+    
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
