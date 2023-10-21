@@ -1,8 +1,8 @@
 # Taste Haven Server: A Journey of Flavors
 
-## Website Link: [Click Here]()
+## Website Link: [Click Here](https://taste-haven-d0082.web.app/)
 
-## Server Link: [Click Here]()
+## Server Link: [Click Here](https://taste-haven-server-bu5qk0l5a-mehedi-hasans-hrid.vercel.app)
 
 This repository contains an Express.js server application with the following features:
 
