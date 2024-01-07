@@ -54,12 +54,12 @@ async function run() {
       }
     });
 
-    app.get('/sliders/:brandName', async (req, res) => {
+    app.get('/sliders/:name', async (req, res) => {
       try {
         const database = client.db('TasteHaven');
         const collection = database.collection('sliders');
-        const brandName = req.params.brandName;
-        const sliderData = await collection.findOne({ name: brandName });
+        const name = req.params.name;
+        const sliderData = await collection.findOne({ name: name });
 
         if (sliderData) {
           const images = sliderData.images;
